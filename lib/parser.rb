@@ -8,7 +8,7 @@ class Parser
     ocr_string.split(/\n/)
   end
 
-  def cols
-    rows.map{|r| r.split(//) }.transpose
+  def matrix
+    rows.map{|r| r.split(//).each_slice(3).to_a }.transpose
   end
 end

@@ -11,9 +11,12 @@ describe Parser do
       end
     end
 
-    describe '#cols' do
-      it 'yields an array of cols with the proper length' do
-        expect(subject.cols.count).to be(27)
+    describe '#matrix' do
+      it 'yields a matrix with the proper width' do
+        expect(subject.matrix.count).to be(9)
+      end
+      it 'yields a matrix with the proper height' do
+        expect(subject.matrix.first.count).to be(3)
       end
     end
   end
