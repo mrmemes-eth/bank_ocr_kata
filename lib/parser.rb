@@ -7,4 +7,8 @@ class Parser
   def rows
     ocr_string.split(/\n/)
   end
+
+  def cols
+    rows.map{|r| r.split(//) }.transpose
+  end
 end
