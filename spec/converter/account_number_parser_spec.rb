@@ -1,8 +1,8 @@
-require_relative '../../lib/parser'
+require_relative '../../lib/converter/account_number_parser'
 
-describe Parser do
+describe AccountNumberParser do
   let(:numbers) { File.read('spec/fixtures/one_to_nine.txt') }
-  subject { Parser.new(numbers) }
+  subject { AccountNumberParser.new(numbers) }
 
   context 'identifying 3x3 blocks as characters' do
     describe '#rows' do

@@ -1,5 +1,6 @@
-class Parser
+class AccountNumberParser
   attr_accessor :ocr_string
+
   def initialize(ocr_string)
     self.ocr_string = ocr_string
   end
