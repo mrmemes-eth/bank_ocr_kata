@@ -1,13 +1,7 @@
 require_relative '../../lib/parser'
 
 describe Parser do
-  let(:numbers) do
-    <<-NUMBERS
-        _  _     _  _  _  _  _
-      | _| _||_||_ |_   ||_||_|
-      ||_  _|  | _||_|  ||_| _|
-    NUMBERS
-  end
+  let(:numbers) { File.read('spec/fixtures/one_to_nine.txt') }
   subject { Parser.new(numbers) }
 
   context 'identifying 3x3 blocks' do
