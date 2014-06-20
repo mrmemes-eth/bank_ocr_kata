@@ -44,15 +44,19 @@ class AccountNumberCharacterIntepreter
     DIGITS[mash] || ILLEGIBLE_CHAR
   end
 
-  def underscore_permutations
-    flat_matrix.each.with_index.reduce([]) do |acc,(char,idx)|
-      acc << flat_matrix.dup.tap do |a|
-        a[idx] = transpose_hash('_')[a[idx]]
-      end.each_slice(3).to_a
+  def character_permutations(char)
+    flat_matrix.each.with_index.reduce([]) do |acc,(_,idx)|
+      acc << transpose_char_at_index(flat_matrix,char,idx).each_slice(3).to_a
     end.reject{|m| m.flatten.include?(nil) }
   end
 
   private
+
+  def transpose_char_at_index(matrix,char,idx)
+    matrix.dup.tap do |a|
+      a[idx] = transpose_hash(char)[a[idx]]
+    end
+  end
 
   def flat_matrix
     @flat_matrix ||= matrix.flatten

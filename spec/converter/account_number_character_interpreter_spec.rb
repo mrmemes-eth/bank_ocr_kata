@@ -123,8 +123,44 @@ describe AccountNumberCharacterIntepreter do
     end
   end
 
+  describe '#pipe_permutations' do
+    subject { char_intepreter.character_permutations('|') }
+    let(:char_matrix) do
+      [[' ','_',' '],
+       ['|','_','|'],
+       [' ','_','|']]
+    end
+    let(:possible_permutations) do
+      [[['|','_',' '],
+        ['|','_','|'],
+        [' ','_','|']],
+
+       [[' ','_','|'],
+        ['|','_','|'],
+        [' ','_','|']],
+
+       [[' ','_',' '],
+        [' ','_','|'],
+        [' ','_','|']],
+
+       [[' ','_',' '],
+        ['|','_',' '],
+        [' ','_','|']],
+
+       [[' ','_',' '],
+        ['|','_','|'],
+        ['|','_','|']],
+
+       [[' ','_',' '],
+        ['|','_','|'],
+        [' ','_',' ']]]
+    end
+    it 'includes every permutation of addition/removal of a pipe' do
+      expect(subject).to match_array(possible_permutations)
+    end
+  end
   describe '#underscore_permutations' do
-    subject { char_intepreter.underscore_permutations }
+    subject { char_intepreter.character_permutations('_') }
     let(:char_matrix) do
       [[' ','_',' '],
        ['|','_','|'],
