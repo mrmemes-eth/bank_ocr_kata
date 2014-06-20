@@ -15,7 +15,7 @@ class AccountNumberInterpreter
 
   def checksum
     integers.reverse.map.with_index do |num,idx|
-      num * (1..9).to_a.fetch(idx)
+      num * idx.succ
     end.reduce(:+)
   end
 
