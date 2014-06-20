@@ -25,8 +25,14 @@ class Converter
   def verified_account_numbers
     interpreters.reduce({}) do |result, interpreter|
       result.tap do |hash|
-        hash[interpreter.account_number] = interpreter.valid?
+        hash[interpreter.account_number] = interpreter.validation_description
       end
+    end
+  end
+
+  def print_validation_results_to(handle)
+    verified_account_numbers.each do |(account_number,validation_description)|
+      handle.write("#{account_number}#{validation_description}\n")
     end
   end
 

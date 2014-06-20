@@ -61,13 +61,32 @@ describe Converter do
     subject { converter.verified_account_numbers }
     let(:path) { './spec/fixtures/user_story_3.txt' }
     let(:result) do
-      { '000000051' => true,
-        '49006771?' => false,
-        '1234?678?' => false,
-        '664371495' => false }
+      { '000000051' => nil,
+        '49006771?' => ' ILL',
+        '1234?678?' => ' ILL',
+        '664371495' => ' ERR' }
     end
     it 'returns a hash of results with their validation results' do
       expect(subject).to eq(result)
+    end
+  end
+
+  describe '#print_validation_results_to' do
+    let(:handle) { StringIO.new }
+    let(:path)   { './spec/fixtures/user_story_3.txt' }
+    let(:result) do
+      %q{
+      000000051
+      49006771? ILL
+      1234?678? ILL
+      664371495 ERR
+      }.gsub(/^\s+/,'')
+    end
+    before do
+      converter.print_validation_results_to(handle)
+    end
+    it 'prints the desired output' do
+      expect(handle.string).to eq(result)
     end
   end
 

@@ -23,6 +23,15 @@ class AccountNumberInterpreter
     checksum % 11 == 0
   end
 
+  def validation_description
+    return if valid?
+    illegible? ? ' ILL' : ' ERR'
+  end
+
+  def illegible?
+    account_number.include?(AccountNumberCharacterIntepreter::ILLEGIBLE_CHAR)
+  end
+
   private
 
   def integers

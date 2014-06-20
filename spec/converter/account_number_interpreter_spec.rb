@@ -92,4 +92,49 @@ describe AccountNumberInterpreter do
       end
     end
   end
+
+  describe '#illegible?' do
+    let(:ocr_string) { '' }
+    subject { interpreter.illegible? }
+    context 'when the account number has a ? in it' do
+      before  do
+        allow(interpreter).to receive(:account_number).and_return('66437149?')
+      end
+      it 'is true' do
+        expect(subject).to be(true)
+      end
+    end
+
+    context 'when the account number does not have a ? in it' do
+      before  do
+        allow(interpreter).to receive(:account_number).and_return('664371495')
+      end
+      it 'is false' do
+        expect(subject).to be(false)
+      end
+    end
+  end
+
+  describe '#validation_description' do
+    let(:ocr_string) { '' }
+    subject { interpreter.validation_description }
+    context 'when the account number is valid' do
+      before { allow(interpreter).to receive(:valid?).and_return(true) }
+      specify { expect(subject).to be(nil) }
+    end
+
+    context 'when the account number is invalid' do
+      before { allow(interpreter).to receive(:valid?).and_return(false) }
+      context 'and the account number is illegible' do
+        before { allow(interpreter).to receive(:illegible?).and_return(true) }
+        specify { expect(subject).to eq(' ILL') }
+      end
+
+      context 'and the account number is not illegible' do
+        before { allow(interpreter).to receive(:illegible?).and_return(false) }
+        specify { expect(subject).to eq(' ERR') }
+      end
+    end
+
+  end
 end

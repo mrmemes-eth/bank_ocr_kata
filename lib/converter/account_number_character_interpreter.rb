@@ -1,6 +1,8 @@
 class AccountNumberCharacterIntepreter
   attr_accessor :matrix
 
+  ILLEGIBLE_CHAR = '?'
+
   DIGITS = {
     ' _ ' \
     '| |' \
@@ -39,7 +41,7 @@ class AccountNumberCharacterIntepreter
   end
 
   def digit
-    DIGITS[mash] || '?'
+    DIGITS[mash] || ILLEGIBLE_CHAR
   end
 
   private
