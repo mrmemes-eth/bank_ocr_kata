@@ -23,9 +23,16 @@ class AccountNumberInterpreter
     checksum % 11 == 0
   end
 
-  def validation_description
-    return if valid?
-    illegible? ? ' ILL' : ' ERR'
+  def invalid?
+    !valid?
+  end
+
+  def error_description
+    if illegible?
+      ' ILL'
+    elsif invalid?
+      ' ERR'
+    end
   end
 
   def illegible?

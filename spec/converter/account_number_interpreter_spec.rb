@@ -115,9 +115,9 @@ describe AccountNumberInterpreter do
     end
   end
 
-  describe '#validation_description' do
+  describe '#error_description' do
     let(:ocr_string) { '' }
-    subject { interpreter.validation_description }
+    subject { interpreter.error_description }
     context 'when the account number is valid' do
       before { allow(interpreter).to receive(:valid?).and_return(true) }
       specify { expect(subject).to be(nil) }
