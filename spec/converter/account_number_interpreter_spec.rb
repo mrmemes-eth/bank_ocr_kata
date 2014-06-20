@@ -28,4 +28,45 @@ describe AccountNumberInterpreter do
       end
     end
   end
+
+  describe "#checksum" do
+    let(:ocr_string) { '' }
+    subject { interpreter.checksum }
+
+    context 'with an account number of 345882865' do
+      before  do
+        allow(interpreter).to receive(:account_number).and_return('345882865')
+      end
+      it 'has a mod 11 of zero' do
+        expect(subject % 11).to eq(0)
+      end
+    end
+
+    context 'with an account number of 000000051' do
+      before  do
+        allow(interpreter).to receive(:account_number).and_return('000000051')
+      end
+      it 'has a mod 11 of zero' do
+        expect(subject % 11).to eq(0)
+      end
+    end
+
+    context 'with an account number of 457508000' do
+      before  do
+        allow(interpreter).to receive(:account_number).and_return('457508000')
+      end
+      it 'has a mod 11 of zero' do
+        expect(subject % 11).to eq(0)
+      end
+    end
+
+    context 'with an account number of 664371495' do
+      before  do
+        allow(interpreter).to receive(:account_number).and_return('664371495')
+      end
+      it 'does not have a mod 11 of zero' do
+        expect(subject % 11).to_not eq(0)
+      end
+    end
+  end
 end

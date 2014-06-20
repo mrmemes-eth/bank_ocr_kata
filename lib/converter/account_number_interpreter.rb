@@ -13,4 +13,16 @@ class AccountNumberInterpreter
     end.join
   end
 
+  def checksum
+    integers.reverse.map.with_index do |num,idx|
+      num * (1..9).to_a.fetch(idx)
+    end.reduce(:+)
+  end
+
+  private
+
+  def integers
+    account_number.split(//).map(&:to_i)
+  end
+
 end
