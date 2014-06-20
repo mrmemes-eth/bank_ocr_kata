@@ -19,6 +19,10 @@ class AccountNumberInterpreter
     end.reduce(:+)
   end
 
+  def valid?
+    checksum % 11 == 0
+  end
+
   private
 
   def integers

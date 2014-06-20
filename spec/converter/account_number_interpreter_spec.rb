@@ -69,4 +69,27 @@ describe AccountNumberInterpreter do
       end
     end
   end
+
+  describe '#valid?' do
+    let(:ocr_string) { '' }
+    subject { interpreter.valid? }
+
+    context 'with an account number whose checksum mod 11 is 0' do
+      before  do
+        allow(interpreter).to receive(:account_number).and_return('345882865')
+      end
+      it 'is valid' do
+        expect(subject).to be(true)
+      end
+    end
+
+    context 'with an account number whose checksum mod 11 is not 0' do
+      before  do
+        allow(interpreter).to receive(:account_number).and_return('664371495')
+      end
+      it 'is not valid' do
+        expect(subject).to be(false)
+      end
+    end
+  end
 end
