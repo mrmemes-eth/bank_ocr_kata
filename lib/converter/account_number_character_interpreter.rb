@@ -39,7 +39,7 @@ class AccountNumberCharacterIntepreter
   end
 
   def digit
-    DIGITS[mash] or raise "#{pretty} is not a valid character matrix"
+    DIGITS[mash] || '?'
   end
 
   private

@@ -19,13 +19,25 @@ class Converter
   end
 
   def account_numbers
-    matrices.map do |matrix|
-      AccountNumberInterpreter.new(matrix).account_number
+    interpreters.map(&:account_number)
+  end
+
+  def verified_account_numbers
+    interpreters.reduce({}) do |result, interpreter|
+      result.tap do |hash|
+        hash[interpreter.account_number] = interpreter.valid?
+      end
     end
   end
 
   private
   def file_from(path)
     File.read(File.expand_path(path))
+  end
+
+  def interpreters
+    matrices.map do |matrix|
+      AccountNumberInterpreter.new(matrix)
+    end
   end
 end

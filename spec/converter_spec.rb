@@ -56,4 +56,19 @@ describe Converter do
       end
     end
   end
+
+  describe '#verified_account_numbers' do
+    subject { converter.verified_account_numbers }
+    let(:path) { './spec/fixtures/user_story_3.txt' }
+    let(:result) do
+      { '000000051' => true,
+        '49006771?' => false,
+        '1234?678?' => false,
+        '664371495' => false }
+    end
+    it 'returns a hash of results with their validation results' do
+      expect(subject).to eq(result)
+    end
+  end
+
 end
