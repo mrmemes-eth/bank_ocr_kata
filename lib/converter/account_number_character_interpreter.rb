@@ -46,10 +46,6 @@ class AccountNumberCharacterIntepreter
 
   private
 
-  def pretty
-    self.matrix.map(&:join).join("\n")
-  end
-
   def mash
     self.matrix.flatten.join
   end
