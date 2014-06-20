@@ -50,6 +50,12 @@ class AccountNumberCharacterIntepreter
     end.reject{|m| m.flatten.include?(nil) }
   end
 
+  def permutations
+    character_permutations('_').concat(character_permutations('|')).map do |m|
+      DIGITS[m.flatten.join]
+    end.compact
+  end
+
   private
 
   def transpose_char_at_index(matrix,char,idx)

@@ -117,8 +117,17 @@ describe AccountNumberCharacterIntepreter do
       end
 
       it 'includes 9 in its permutations' do
-        pending
         expect(subject).to include(9)
+      end
+    end
+    context 'given 9 as its matrix' do
+      let(:char_matrix) do
+        [[' ','_',' '],
+        ['|','_','|'],
+        [' ','_','|']]
+      end
+      it 'contains all permutations the matrix could match to real numbers' do
+        expect(subject).to match_array([8,5,3])
       end
     end
   end
