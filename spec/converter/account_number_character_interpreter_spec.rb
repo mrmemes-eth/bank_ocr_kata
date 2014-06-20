@@ -106,4 +106,58 @@ describe AccountNumberCharacterIntepreter do
       end
     end
   end
+
+  describe '#permutations' do
+    subject { char_intepreter.permutations }
+    context 'given a matrix similar to a 9' do
+      let(:char_matrix) do
+        [[' ',' ',' '],
+         ['|','_','|'],
+         [' ','_','|']]
+      end
+
+      it 'includes 9 in its permutations' do
+        pending
+        expect(subject).to include(9)
+      end
+    end
+  end
+
+  describe '#underscore_permutations' do
+    subject { char_intepreter.underscore_permutations }
+    let(:char_matrix) do
+      [[' ','_',' '],
+       ['|','_','|'],
+       [' ','_','|']]
+    end
+    let(:possible_permutations) do
+      [[['_','_',' '],
+        ['|','_','|'],
+        [' ','_','|']],
+
+       [[' ',' ',' '],
+        ['|','_','|'],
+        [' ','_','|']],
+
+       [[' ','_','_'],
+        ['|','_','|'],
+        [' ','_','|']],
+
+       [[' ','_',' '],
+        ['|',' ','|'],
+        [' ','_','|']],
+
+       [[' ','_',' '],
+        ['|','_','|'],
+        ['_','_','|']],
+
+       [[' ','_',' '],
+        ['|','_','|'],
+        [' ',' ','|']]]
+    end
+    it 'includes every permutation of addition/removal of an underscore' do
+      expect(subject).to match_array(possible_permutations)
+    end
+  end
+
 end
