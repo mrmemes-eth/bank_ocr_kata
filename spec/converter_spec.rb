@@ -2,14 +2,17 @@ require_relative '../lib/converter'
 
 describe Converter do
   let(:converter) { described_class.new(path) }
+
   describe '#parse' do
     subject { converter.parse }
+
     context 'with ocr_account_numbers.txt' do
       let(:path) { './spec/fixtures/ocr_account_numbers.txt' }
       it 'returns 11 account number strings' do
         expect(subject.count).to eq(11)
       end
     end
+
     context 'with one_to_nine.txt' do
       let(:path) { './spec/fixtures/one_to_nine.txt' }
       it 'returns 1 account number string' do
