@@ -39,10 +39,14 @@ class AccountNumberCharacterIntepreter
   end
 
   def digit
-    DIGITS[mash] or raise "'#{mash}' is not a valid character matrix"
+    DIGITS[mash] or raise "#{pretty} is not a valid character matrix"
   end
 
   private
+
+  def pretty
+    self.matrix.map(&:join).join("\n")
+  end
 
   def mash
     self.matrix.flatten.join
