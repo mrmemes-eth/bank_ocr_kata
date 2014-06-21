@@ -14,38 +14,8 @@ class AccountNumberInterpreter
     end.join
   end
 
-  def valid?
-    legible? && validator.valid?
-  end
-
-  def invalid?
-    !valid?
-  end
-
-  def error_description
-    if illegible?
-      ' ILL'
-    elsif invalid?
-      ' ERR'
-    end
-  end
-
-  def illegible?
-    account_number.include?(AccountNumberCharacterIntepreter::ILLEGIBLE_CHAR)
-  end
-
-  def legible?
-    !illegible?
-  end
-
-  private
-
-  def validator
-    @validator ||= AccountNumberValdiator.new(integers)
-  end
-
-  def integers
-    account_number.split(//).map(&:to_i)
+  def validation_description
+    AccountNumberValidator.new(account_number).validation_description
   end
 
 end

@@ -1,34 +1,34 @@
 require_relative '../../lib/converter/account_number_validator'
 
-describe AccountNumberValdiator do
-  let(:validator) { described_class.new(integers) }
+describe AccountNumberValidator do
+  let(:validator) { described_class.new(number) }
 
   describe "#checksum" do
     subject { validator.checksum }
 
     context 'with an account number of 345882865' do
-      let(:integers) { [3, 4, 5, 8, 8, 2, 8, 6, 5] }
+      let(:number) { '345882865' }
       it 'has a mod 11 of zero' do
         expect(subject % 11).to eq(0)
       end
     end
 
     context 'with an account number of 000000051' do
-      let(:integers) { [0, 0, 0, 0, 0, 0, 0, 5, 1] }
+      let(:number) { '000000051' }
       it 'has a mod 11 of zero' do
         expect(subject % 11).to eq(0)
       end
     end
 
     context 'with an account number of 457508000' do
-      let(:integers) { [4, 5, 7, 5, 0, 8, 0, 0, 0] }
+      let(:number) { '457508000' }
       it 'has a mod 11 of zero' do
         expect(subject % 11).to eq(0)
       end
     end
 
     context 'with an account number of 664371495' do
-      let(:integers) { [6, 6, 4, 3, 7, 1, 4, 9, 5] }
+      let(:number) { '664371495' }
       it 'does not have a mod 11 of zero' do
         expect(subject % 11).to_not eq(0)
       end
@@ -39,16 +39,61 @@ describe AccountNumberValdiator do
     subject { validator.valid? }
 
     context 'with an account number whose checksum mod 11 is 0' do
-      let(:integers) { [3, 4, 5, 8, 8, 2, 8, 6, 5] }
+      let(:number) { '345882865' }
       it 'is valid' do
         expect(subject).to be(true)
       end
     end
 
     context 'with an account number whose checksum mod 11 is not 0' do
-      let(:integers) { [6, 6, 4, 3, 7, 1, 4, 9, 5] }
+      let(:number) { '664371495' }
       it 'is not valid' do
         expect(subject).to be(false)
+      end
+    end
+
+    context 'with an illegible account number' do
+      let(:number) { '?45882865' }
+      it 'is not valid' do
+        expect(subject).to be(false)
+      end
+    end
+
+  end
+
+  describe '#illegible?' do
+    subject { validator.illegible? }
+    context 'when the account number has a ? in it' do
+      let(:number) { '66437149?' }
+      it 'is true' do
+        expect(subject).to be(true)
+      end
+    end
+
+    context 'when the account number does not have a ? in it' do
+      let(:number) { '664371495' }
+      it 'is false' do
+        expect(subject).to be(false)
+      end
+    end
+  end
+
+  describe '#validation_description' do
+    subject { validator.validation_description }
+    context 'when the account number is valid' do
+      let(:number) { '345882865' }
+      specify { expect(subject).to be(nil) }
+    end
+
+    context 'when the account number is invalid' do
+      context 'and the account number is illegible' do
+        let(:number) { '66437149?' }
+        specify { expect(subject).to eq(' ILL') }
+      end
+
+      context 'and the account number is not illegible' do
+        let(:number) { '664371495' }
+        specify { expect(subject).to eq(' ERR') }
       end
     end
 
