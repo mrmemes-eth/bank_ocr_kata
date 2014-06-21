@@ -1,4 +1,5 @@
 require_relative 'account_number_character_interpreter'
+require_relative 'account_number_validator'
 
 class AccountNumberInterpreter
   attr_accessor :matrices
@@ -13,14 +14,8 @@ class AccountNumberInterpreter
     end.join
   end
 
-  def checksum
-    integers.reverse.map.with_index do |num,idx|
-      num * idx.succ
-    end.reduce(:+)
-  end
-
   def valid?
-    legible? && checksum % 11 == 0
+    legible? && validator.valid?
   end
 
   def invalid?
@@ -44,6 +39,10 @@ class AccountNumberInterpreter
   end
 
   private
+
+  def validator
+    @validator ||= AccountNumberValdiator.new(integers)
+  end
 
   def integers
     account_number.split(//).map(&:to_i)

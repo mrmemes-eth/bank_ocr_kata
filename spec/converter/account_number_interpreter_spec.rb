@@ -29,66 +29,27 @@ describe AccountNumberInterpreter do
     end
   end
 
-  describe "#checksum" do
-    let(:ocr_string) { '' }
-    subject { interpreter.checksum }
-
-    context 'with an account number of 345882865' do
-      before  do
-        allow(interpreter).to receive(:account_number).and_return('345882865')
-      end
-      it 'has a mod 11 of zero' do
-        expect(subject % 11).to eq(0)
-      end
-    end
-
-    context 'with an account number of 000000051' do
-      before  do
-        allow(interpreter).to receive(:account_number).and_return('000000051')
-      end
-      it 'has a mod 11 of zero' do
-        expect(subject % 11).to eq(0)
-      end
-    end
-
-    context 'with an account number of 457508000' do
-      before  do
-        allow(interpreter).to receive(:account_number).and_return('457508000')
-      end
-      it 'has a mod 11 of zero' do
-        expect(subject % 11).to eq(0)
-      end
-    end
-
-    context 'with an account number of 664371495' do
-      before  do
-        allow(interpreter).to receive(:account_number).and_return('664371495')
-      end
-      it 'does not have a mod 11 of zero' do
-        expect(subject % 11).to_not eq(0)
-      end
-    end
-  end
-
   describe '#valid?' do
     let(:ocr_string) { '' }
     subject { interpreter.valid? }
 
-    context 'with an account number whose checksum mod 11 is 0' do
-      before  do
-        allow(interpreter).to receive(:account_number).and_return('345882865')
+    context 'with an account number that is legible' do
+      before do
+        allow(interpreter).to receive(:legible?).and_return(true)
+        allow(interpreter).to receive(:validator).and_return(validator)
       end
-      it 'is valid' do
-        expect(subject).to be(true)
-      end
-    end
 
-    context 'with an account number whose checksum mod 11 is not 0' do
-      before  do
-        allow(interpreter).to receive(:account_number).and_return('664371495')
+      context 'with an account number the validator deems valid' do
+        let(:validator) { double(:valid? => true) }
+        it 'is valid' do
+          expect(subject).to be(true)
+        end
       end
-      it 'is not valid' do
-        expect(subject).to be(false)
+      context 'with an account number the validator deems invalid' do
+        let(:validator) { double(:valid? => false) }
+        it 'is invalid' do
+          expect(subject).to be(false)
+        end
       end
     end
 
