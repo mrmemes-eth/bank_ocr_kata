@@ -26,15 +26,18 @@ describe Converter do
 
     context 'with one_to_nine.txt' do
       let(:path) { './spec/fixtures/one_to_nine.txt' }
-      it 'returns an array with one account number string' do
+      it 'returns an array with one account number matrix' do
         expect(subject.count).to eq(1)
+      end
+
+      specify 'there are nine submatrices' do
         expect(subject.first.count).to eq(9)
       end
     end
 
     context 'with ocr_account_numbers.txt' do
       let(:path) { './spec/fixtures/ocr_account_numbers.txt' }
-      it 'returns an array with one account number string' do
+      it 'returns an array with eleven account number matrices' do
         expect(subject.count).to eq(11)
       end
     end
@@ -51,7 +54,7 @@ describe Converter do
 
     context 'with ocr_account_numbers.txt' do
       let(:path) { './spec/fixtures/ocr_account_numbers.txt' }
-      it 'returns an array with one account number string' do
+      it 'returns an array with eleven account number strings' do
         expect(subject.count).to eq(11)
       end
     end
