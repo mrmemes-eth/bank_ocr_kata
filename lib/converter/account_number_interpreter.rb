@@ -20,7 +20,7 @@ class AccountNumberInterpreter
   end
 
   def valid?
-    checksum % 11 == 0
+    legible? && checksum % 11 == 0
   end
 
   def invalid?
@@ -37,6 +37,10 @@ class AccountNumberInterpreter
 
   def illegible?
     account_number.include?(AccountNumberCharacterIntepreter::ILLEGIBLE_CHAR)
+  end
+
+  def legible?
+    !illegible?
   end
 
   private

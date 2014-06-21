@@ -91,6 +91,16 @@ describe AccountNumberInterpreter do
         expect(subject).to be(false)
       end
     end
+
+    context 'with an account number that is illegible' do
+      before  do
+        allow(interpreter).to receive(:account_number).and_return('?00000051')
+      end
+      it 'is not valid' do
+        expect(subject).to be(false)
+      end
+    end
+
   end
 
   describe '#illegible?' do
