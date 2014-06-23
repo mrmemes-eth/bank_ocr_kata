@@ -29,7 +29,7 @@ class AccountNumberInterpreter
       interpreter.permutations.map do |permutation|
         interpreted_account_number.tap {|n| n[idx] = permutation.to_s }
       end
-    end.flatten(1).select do |number|
+    end.flatten.select do |number|
       AccountNumberValidator.new(number).valid?
     end
   end
