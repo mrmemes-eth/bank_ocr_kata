@@ -67,7 +67,7 @@ describe Converter do
       { '000000051' => nil,
         '49006771?' => ' ILL',
         '1234?678?' => ' ILL',
-        '664371495' => ' ERR' }
+        '664371485' => nil }
     end
     it 'returns a hash of results with their validation results' do
       expect(subject).to eq(result)
@@ -76,13 +76,21 @@ describe Converter do
 
   describe '#print_validation_results_to' do
     let(:handle) { StringIO.new }
-    let(:path)   { './spec/fixtures/user_story_3.txt' }
+    let(:path)   { './spec/fixtures/user_story_4.txt' }
     let(:result) do
       %q{
-      000000051
-      49006771? ILL
-      1234?678? ILL
-      664371495 ERR
+        711111111
+        777777177
+        200800000
+        333393333
+        888888888 AMB ["888886888", "888888988", "888888880"]
+        555555555 AMB ["559555555", "555655555"]
+        666666666 AMB ["686666666", "666566666"]
+        999999999 AMB ["899999999", "993999999", "999959999"]
+        490067715 AMB ["490867715", "490067115", "490067719"]
+        123456789
+        000000051
+        490867715
       }.gsub(/^\s+/,'')
     end
     before do

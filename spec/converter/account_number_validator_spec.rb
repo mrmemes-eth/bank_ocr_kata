@@ -78,25 +78,4 @@ describe AccountNumberValidator do
     end
   end
 
-  describe '#validation_description' do
-    subject { validator.validation_description }
-    context 'when the account number is valid' do
-      let(:number) { '345882865' }
-      specify { expect(subject).to be(nil) }
-    end
-
-    context 'when the account number is invalid' do
-      context 'and the account number is illegible' do
-        let(:number) { '66437149?' }
-        specify { expect(subject).to eq(' ILL') }
-      end
-
-      context 'and the account number is not illegible' do
-        let(:number) { '664371495' }
-        specify { expect(subject).to eq(' ERR') }
-      end
-    end
-
-  end
-
 end
