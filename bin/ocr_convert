@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+require './lib/converter'
+
+unless (1..2).include?(ARGV.count)
+  puts "> USAGE: ocr_convert path/to/file [path/to/output]"
+  puts "> output defaults to STDOUT"
+  require 'pry'; binding.pry;
+  exit(1)
+end
+
+def output
+  if ARGV[1]
+    File.open(ARGV[1],'w+')
+  else
+    STDOUT
+  end
+end
+
+Converter.new(ARGV.first).print_validation_results_to(output)
+
