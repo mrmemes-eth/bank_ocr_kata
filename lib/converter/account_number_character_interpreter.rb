@@ -58,8 +58,8 @@ class AccountNumberCharacterIntepreter
 
   private
 
-  def transpose_char_at_index(matrix,char,idx)
-    matrix.dup.tap do |a|
+  def transpose_char_at_index(flat_matrix,char,idx)
+    flat_matrix.dup.tap do |a|
       a[idx] = transpose_hash(char)[a[idx]]
     end
   end
